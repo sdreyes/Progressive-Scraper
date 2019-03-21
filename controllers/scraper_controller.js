@@ -5,10 +5,16 @@ var cheerio = require("cheerio");
 var db = require("../models");
 
 router.get("/", function(req, res) {
+    res.render("index");
+})
+
+router.get("/scrape", function(req, res) {
     axios.get("http://www.progarchives.com/")
         .then(function(response) {
             var $ = cheerio.load(response.data);
             console.log("scraped");
+            var numArticles = 0;
+            var scrapedArticles = [];
             $("div.reviewbox").each(function(i, element) {
                 var result = {};
                 result.artist = $(this)
@@ -33,20 +39,20 @@ router.get("/", function(req, res) {
                     .children("a").first()
                     .children("img")
                     .attr("src");
-                console.log(result.artist, result.album, result.link, result.review, result.image);
-
-                db.Article.create(result)
-                    .then(function(dbArticle) {
-                        console.log(dbArticle);
-                    })
-                    .catch(function(err) {
-                        console.log(err);
-                    });
+                console.log(result);
+                scrapedArticles.push(result);
+                numArticles++;
             });
+            var hbsObject = {
+                message: numArticles + "review(s) scraped!",
+                scrapedArticles: scrapedArticles
+            }
+            res.send(hbsObject);
         });
-    res.render("index");
 });
 
+router.get("/savedArticles")
 
+router.post("/article/:id")
 
 module.exports = router;
