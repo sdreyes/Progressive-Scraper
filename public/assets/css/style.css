@@ -1,0 +1,10 @@
+.jumbotron {
+    background-image: url("../img/background/rogerdean2.jpg");
+    background-position: 50% 22%;
+}
+.site-title {
+    font-family: 'Permanent Marker', cursive;
+}
+.site-subtitle {
+    font-family: 'Kalam', cursive;
+}
