@@ -7,12 +7,14 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     {{!-- Bootstrap CSS CDN --}}
     <link rel="stylesheet" type="text/css" media="screen" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
-    {{!-- Personal CSS --}}
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
     {{!-- Bootstrap JavaScript CDN --}}
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     {{!-- Google Fonts --}}
     <link href="https://fonts.googleapis.com/css?family=Kalam|Permanent+Marker" rel="stylesheet">
+    {{!-- Personal CSS --}}
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    {{!-- Personal JavaScript --}}
+    <script src="assets/js/scraper.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #001a33">
@@ -30,12 +32,29 @@
                     <a class="nav-link" href="#">Saved Reviews &nbsp; </a>
                 </li>
                 <form class="form-inline my-2 my-lg-0">
-                    <button class="btn btn-outline-info my-2 my-sm-0">Scrape Reviews</button>
+                    <button class="btn btn-outline-info my-2 my-sm-0 scrape-reviews" data-toggle="modal">Scrape Reviews</button>
+                    {{!-- Modal to display number of articles scraped --}}
+                    <div class="modal fade" id="articles-scraped-modal" tabindex="-1" role="dialog" aria-labelledby="articlesScrapedModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="articlesScrapedModalLabel">Scrape Complete</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{!-- Modal body is dynamically rendered --}}
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
                 </form>
             </ul>
         </div>
     </nav>
-    <div class="jumbotron text-center">
+    <div class="jumbotron text-center my-0">
         <h1 class="text-white site-title">Progressive Scraper</h1>
         <h5 class="text-white site-subtitle">The hottest new prog album reviews!</h5>
     </div>
