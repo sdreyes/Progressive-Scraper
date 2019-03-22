@@ -5,7 +5,7 @@ var cheerio = require("cheerio");
 var db = require("../models");
 
 router.get("/", function(req, res) {
-    res.render("index");
+    res.render("index", req);
 })
 
 router.get("/scrape", function(req, res) {
@@ -44,10 +44,10 @@ router.get("/scrape", function(req, res) {
                 numArticles++;
             });
             var hbsObject = {
-                message: numArticles + "review(s) scraped!",
+                message: numArticles + " review(s) scraped!",
                 scrapedArticles: scrapedArticles
             }
-            res.send(hbsObject);
+            res.json(hbsObject);
         });
 });
 
