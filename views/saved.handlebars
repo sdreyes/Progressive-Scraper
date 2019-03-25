@@ -1,0 +1,20 @@
+<div class="container">
+    {{#each articles}}
+        <div class="row mb-2" id="index-content">
+            <div class="col bg-light p-2">
+                <img class="img-thumbnail rounded float-left mr-3 mb-3 album-cover" src="{{image}}">
+                <h3>{{album}}</h3>
+                <h5>{{artist}}</h5>
+                <small>Review by <strong>{{author}}</strong></small>
+                <p class="mt-3">{{review}}... <a href="{{link}}" target="_blank">READ MORE</a></p>
+                <div class="text-right">
+                    <button data-id="{{_id}}" class="btn add-comment">Comments</button>
+                    <button data-id="{{_id}}" class="btn unsave-article">Remove</button>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+    {{#unless articles}}
+        <h3>You have no saved articles.</h3>
+    {{/unless}}
+</div>
