@@ -5,18 +5,19 @@ $(function () {
             url: "/scrape",
             type: "GET",
             success: function(result) {
+                $("#articles-scraped-modal").modal("hide");
                 $(".modal-body").text(result.message);
                 $("#articles-scraped-modal").modal("show");
-                displayArticles(result.scrapedArticles);
             },
-            error: function (err) {
-                console.log("error scraping");
+            error: function() {
+                $("#articles-scraped-modal").modal("hide");
+                $(".modal-body").text("Could not scrape at this time");
+                $("#articles-scraped-modal").modal("show");
             }
         })
     })
 
-    function displayArticles(articles) {
-        console.log(articles);
-        $("#index-content").empty();
-    }
+    $("#articles-scraped-modal").on("hidden.bs.modal", function() {
+        location.reload();
+    })
 })
