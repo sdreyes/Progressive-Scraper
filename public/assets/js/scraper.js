@@ -44,4 +44,18 @@ $(function () {
             location.reload();
         });
     });
+
+    $(".add-comment").on("click", function(event) {
+        event.preventDefault();
+        let articleId = $(this).attr("data-id");
+        $.ajax({
+            url: "/articles/" + articleId,
+            type: "GET"
+        }).then(function(response) {
+            for (i=0; i < response.comments.length; i++) {
+                $("#comments-modal-" + articleId).html("<p>" + response.comments[i].name + "</p><p>" + response.comments[i].body + "/p>");
+            }
+            $("#comments-modal-" + articleId).modal("show");
+        })
+    })
 });
