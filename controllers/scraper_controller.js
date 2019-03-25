@@ -1,14 +1,14 @@
-var express = require("express");
-var router = express.Router();
-var axios = require("axios");
-var cheerio = require("cheerio");
-var db = require("../models");
+const express = require("express");
+const router = express.Router();
+const axios = require("axios");
+const cheerio = require("cheerio");
+const db = require("../models");
 
 router.get("/", function(req, res) {
-    db.Article.find({}).sort({ _id: -1 }).limit(10)
+    db.Article.find({ "saved": false }).sort({ _id: -1 }).limit(10)
         .then(function(dbArticle) {
             console.log(dbArticle);
-            var hbsObject = {
+            const hbsObject = {
                 articles: dbArticle
             };
             res.render("index", hbsObject);
@@ -18,16 +18,30 @@ router.get("/", function(req, res) {
         });
 })
 
+router.get("/saved", function(req, res) {
+    db.Article.find({ "saved": true }).sort({ _id: -1 })
+        .then(function(dbArticle) {
+            console.log(dbArticle);
+            const hbsObject = {
+                articles: dbArticle
+            };
+            res.render("saved", hbsObject);
+        })
+        .catch(function(err) {
+            res.json(err);
+        });
+})
+
 router.get("/scrape", function(req, res) {
     axios.get("http://www.progarchives.com/")
         .then(function(response) {
-            var $ = cheerio.load(response.data);
+            const $ = cheerio.load(response.data);
             console.log("scraped");
-            var numArticles = 0;
-            var numAttempts = 0;
+            let numArticles = 0;
+            let numAttempts = 0;
             const previewLength = 400;
             $("div.reviewbox").each(function(i, element) {
-                var result = {};
+                const result = {};
                 result.artist = $(this)
                     .children(".review-text-zone")
                     .children("a").eq(1)
@@ -56,7 +70,6 @@ router.get("/scrape", function(req, res) {
                     .children("p").first()
                     .children("a")
                     .text();
-                console.log(result);
                 db.Article.create(result)
                     .then(function(dbArticle) {
                         numArticles++;
@@ -72,7 +85,7 @@ router.get("/scrape", function(req, res) {
                 numAttempts++
                 console.log("number of attempts is " + numAttempts);
                 if (numAttempts === 10) {
-                    var hbsObject;
+                    let hbsObject;
                     if (numArticles === 0) {
                         hbsObject = {
                             message: "There are no new reviews"
@@ -89,8 +102,30 @@ router.get("/scrape", function(req, res) {
         });
 });
 
-router.get("/savedArticles")
+router.put("/article/:id", function(req, res) {
+    db.Article.findOneAndUpdate({ _id: req.params.id }, {
+        $set: { saved: req.body.saved }
+    })
+    .then(function(dbArticle) {
+        res.json(dbArticle);
+    })
+    .catch(function(err) {
+        // If an error occurred, send it to the client
+        res.json(err);
+    });
+})
 
-router.post("/article/:id")
+router.post("/article/:id", function(req, res) {
+    db.Note.create(req.body)
+        .then(function(dbNote) {
+            return db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { notes: dbNote._id } }, { new: true });
+        })
+        .then(function(dbArticle) {
+            res.json(dbArticle);
+        })
+        .catch(function(err) {
+            res.json(err);
+        });
+})
 
 module.exports = router;
