@@ -8,3 +8,8 @@
 .site-subtitle {
     font-family: 'Kalam', cursive;
 }
+
+.album-cover {
+    height: 150px;
+    width: auto;
+}
