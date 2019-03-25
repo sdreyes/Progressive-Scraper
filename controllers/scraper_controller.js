@@ -5,7 +5,17 @@ var cheerio = require("cheerio");
 var db = require("../models");
 
 router.get("/", function(req, res) {
-    res.render("index", req);
+    db.Article.find({}).sort({ _id: -1 }).limit(10)
+        .then(function(dbArticle) {
+            console.log(dbArticle);
+            var hbsObject = {
+                articles: dbArticle
+            };
+            res.render("index", hbsObject);
+        })
+        .catch(function(err) {
+            res.json(err);
+        });
 })
 
 router.get("/scrape", function(req, res) {
@@ -14,7 +24,8 @@ router.get("/scrape", function(req, res) {
             var $ = cheerio.load(response.data);
             console.log("scraped");
             var numArticles = 0;
-            var scrapedArticles = [];
+            var numAttempts = 0;
+            const previewLength = 400;
             $("div.reviewbox").each(function(i, element) {
                 var result = {};
                 result.artist = $(this)
@@ -34,20 +45,47 @@ router.get("/scrape", function(req, res) {
                     .children(".review-text-zone")
                     .children("div").first()
                     .text();
+                result.review = result.review.substring(0, previewLength);
                 result.image = $(this)
                     .children(".review-cover-zone")
                     .children("a").first()
                     .children("img")
                     .attr("src");
+                result.author = $(this)
+                    .children(".review-text-zone")
+                    .children("p").first()
+                    .children("a")
+                    .text();
                 console.log(result);
-                scrapedArticles.push(result);
-                numArticles++;
+                db.Article.create(result)
+                    .then(function(dbArticle) {
+                        numArticles++;
+                        console.log("Number of articles is " + numArticles)
+                        renderArticles(numArticles);
+                    })
+                    .catch(function(err) {
+                        renderArticles(numArticles);
+                        console.log(err);
+                    })
             });
-            var hbsObject = {
-                message: numArticles + " review(s) scraped!",
-                scrapedArticles: scrapedArticles
+            function renderArticles(numArticles) {
+                numAttempts++
+                console.log("number of attempts is " + numAttempts);
+                if (numAttempts === 10) {
+                    var hbsObject;
+                    if (numArticles === 0) {
+                        hbsObject = {
+                            message: "There are no new reviews"
+                        }
+                    }
+                    else {
+                        hbsObject = {
+                            message: numArticles + " review(s) scraped!",
+                        }
+                    };
+                    res.json(hbsObject);
+                }
             }
-            res.json(hbsObject);
         });
 });
 
