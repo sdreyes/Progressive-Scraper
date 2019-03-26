@@ -17,6 +17,16 @@ $(function () {
         });
     });
 
+    $(".clear-reviews").on("click", function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: "/scrape",
+            type: "DELETE"
+        }).then(function() {
+            location.reload();
+        })
+    })
+
     $("#articles-scraped-modal").on("hidden.bs.modal", function() {
         location.reload();
     });
@@ -81,4 +91,5 @@ $(function () {
             $("#comments-modal-" + articleId).modal("hide");
         })
     })
+
 });
