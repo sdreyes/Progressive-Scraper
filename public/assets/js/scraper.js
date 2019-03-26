@@ -52,8 +52,10 @@ $(function () {
             url: "/articles/" + articleId,
             type: "GET"
         }).then(function(response) {
-            for (i=0; i < response.comments.length; i++) {
-                $("#comments-modal-" + articleId).html("<p>" + response.comments[i].name + "</p><p>" + response.comments[i].body + "/p>");
+            if (response.comments) {
+                for (i=0; i < response.comments.length; i++) {
+                    $("#comments-modal-" + articleId).html("<p>" + response.comments[i].name + "</p><p>" + response.comments[i].body + "/p>");
+                }
             }
             $("#comments-modal-" + articleId).modal("show");
         })
