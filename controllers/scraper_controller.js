@@ -7,7 +7,6 @@ const db = require("../models");
 router.get("/", function(req, res) {
     db.Article.find({ "saved": false }).sort({ _id: 1 }).limit(10)
         .then(function(dbArticle) {
-            console.log(dbArticle);
             const hbsObject = {
                 articles: dbArticle
             };
@@ -22,7 +21,6 @@ router.get("/saved", function(req, res) {
     db.Article.find({ "saved": true }).sort({ _id: 1 })
         .populate("comments")
         .then(function(dbArticle) {
-            console.log(dbArticle);
             const hbsObject = {
                 articles: dbArticle
             };
@@ -37,7 +35,6 @@ router.get("/scrape", function(req, res) {
     axios.get("http://www.progarchives.com/")
         .then(function(response) {
             const $ = cheerio.load(response.data);
-            console.log("scraped");
             let numArticles = 0;
             let numAttempts = 0;
             const previewLength = 400;
@@ -74,7 +71,6 @@ router.get("/scrape", function(req, res) {
                 db.Article.create(result)
                     .then(function(dbArticle) {
                         numArticles++;
-                        console.log("Number of articles is " + numArticles)
                         renderArticles(numArticles);
                     })
                     .catch(function(err) {
@@ -84,7 +80,6 @@ router.get("/scrape", function(req, res) {
             });
             function renderArticles(numArticles) {
                 numAttempts++
-                console.log("number of attempts is " + numAttempts);
                 if (numAttempts === 10) {
                     let hbsObject;
                     if (numArticles === 0) {
@@ -131,8 +126,21 @@ router.post("/article/:id", function(req, res) {
 
 router.delete("/article/:articleId/comment/:commentId", function(req, res) {
     db.Comment.deleteOne({ _id: req.params.commentId })
-        .then(function(dbComment) {
+        .then(function() {
             return db.Article.update({_id: req.params.articleId}, { $pull: { comments: req.params.commentId } } );
+        })
+        .then(function(dbArticle) {
+            res.json(dbArticle);
+        })
+        .catch(function(err) {
+            res.json(err);
+        });
+})
+
+router.delete("/scrape", function(req, res) {
+    db.Article.deleteMany({})
+        .then(function() {
+            return db.Comment.deleteMany({});
         })
         .then(function(dbArticle) {
             res.json(dbArticle);
