@@ -5,7 +5,7 @@ const cheerio = require("cheerio");
 const db = require("../models");
 
 router.get("/", function(req, res) {
-    db.Article.find({ "saved": false }).sort({ _id: -1 }).limit(10)
+    db.Article.find({ "saved": false }).sort({ _id: 1 }).limit(10)
         .then(function(dbArticle) {
             console.log(dbArticle);
             const hbsObject = {
@@ -19,7 +19,8 @@ router.get("/", function(req, res) {
 })
 
 router.get("/saved", function(req, res) {
-    db.Article.find({ "saved": true }).sort({ _id: -1 })
+    db.Article.find({ "saved": true }).sort({ _id: 1 })
+        .populate("comments")
         .then(function(dbArticle) {
             console.log(dbArticle);
             const hbsObject = {
@@ -102,21 +103,6 @@ router.get("/scrape", function(req, res) {
         });
 });
 
-router.get("/articles/:id", function(req, res) {
-    // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
-    db.Article.findOne({ _id: req.params.id })
-        // ..and populate all of the notes associated with it
-        .populate("comment")
-        .then(function(dbArticle) {
-        // If we were able to successfully find an Article with the given id, send it back to the client
-        res.json(dbArticle);
-    })
-        .catch(function(err) {
-        // If an error occurred, send it to the client
-        res.json(err);
-    });
-});
-
 router.put("/article/:id", function(req, res) {
     db.Article.findOneAndUpdate({ _id: req.params.id }, {
         $set: { saved: req.body.saved }
@@ -131,9 +117,22 @@ router.put("/article/:id", function(req, res) {
 })
 
 router.post("/article/:id", function(req, res) {
-    db.Note.create(req.body)
-        .then(function(dbNote) {
-            return db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { notes: dbNote._id } }, { new: true });
+    db.Comment.create(req.body)
+        .then(function(dbComment) {
+            return db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { comments: dbComment._id } }, { new: true });
+        })
+        .then(function(dbArticle) {
+            res.json(dbArticle);
+        })
+        .catch(function(err) {
+            res.json(err);
+        });
+})
+
+router.delete("/article/:articleId/comment/:commentId", function(req, res) {
+    db.Comment.deleteOne({ _id: req.params.commentId })
+        .then(function(dbComment) {
+            return db.Article.update({_id: req.params.articleId}, { $pull: { comments: req.params.commentId } } );
         })
         .then(function(dbArticle) {
             res.json(dbArticle);
