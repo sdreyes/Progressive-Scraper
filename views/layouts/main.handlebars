@@ -31,36 +31,35 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/saved">Saved Reviews &nbsp; </a>
                 </li>
-                <form class="form-inline my-2 my-lg-0">
-                    <button class="btn btn-outline-info my-2 my-sm-0 scrape-reviews" data-toggle="modal">Scrape Reviews</button>
-                    &nbsp&nbsp
-                    <button class="btn btn-outline-info my-2 my-sm-0 clear-reviews">Clear Reviews</button>
-                    
-                    {{!-- Modal to display number of articles scraped --}}
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <button class="btn btn-outline-info my-2 my-sm-0 scrape-reviews" data-toggle="modal">Scrape Reviews</button>
+                &nbsp&nbsp
+                <button class="btn btn-outline-info my-2 my-sm-0 clear-reviews">Clear Reviews</button>
+                
+                {{!-- Modal to display number of articles scraped --}}
 
-                    <div class="modal fade" id="articles-scraped-modal" tabindex="-1" role="dialog" aria-labelledby="articlesScrapedModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="articlesScrapedModalLabel">Scrape Complete</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                {{!-- Modal body is dynamically rendered --}}
-                            </div>
+                <div class="modal fade" id="articles-scraped-modal" tabindex="-1" role="dialog" aria-labelledby="articlesScrapedModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="articlesScrapedModalLabel">Scrape Complete</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {{!-- Modal body is dynamically rendered --}}
                         </div>
                     </div>
-                    </div>
-
-                </form>
-            </ul>
+                </div>
+                </div>
+            </form>
         </div>
     </nav>
     <div class="jumbotron text-center">
         <h1 class="text-white site-title" id="jumbo-site-title">Progressive Scraper</h1>
-        <h5 class="text-white site-subtitle">The hottest new prog album reviews!</h5>
+        <h5 class="text-white site-subtitle">The hottest new prog rock album reviews!</h5>
     </div>
     {{{body}}}
 </body>
