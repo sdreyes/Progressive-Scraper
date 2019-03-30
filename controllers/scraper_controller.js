@@ -5,7 +5,7 @@ const cheerio = require("cheerio");
 const db = require("../models");
 
 router.get("/", function(req, res) {
-    db.Article.find({ "saved": false }).sort({ _id: 1 }).limit(10)
+    db.Article.find({ "saved": false }).sort({ _id: -1 }).limit(10)
         .then(function(dbArticle) {
             const hbsObject = {
                 articles: dbArticle
@@ -18,7 +18,7 @@ router.get("/", function(req, res) {
 })
 
 router.get("/saved", function(req, res) {
-    db.Article.find({ "saved": true }).sort({ _id: 1 })
+    db.Article.find({ "saved": true }).sort({ _id: -1 })
         .populate("comments")
         .then(function(dbArticle) {
             const hbsObject = {
