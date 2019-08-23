@@ -69,16 +69,23 @@ $(function () {
   $(".submit-comment").on("click", function (event) {
     event.preventDefault();
     let articleId = $(this).attr("data-id");
-    $.ajax({
-      url: "/article/" + articleId,
-      type: "POST",
-      data: {
-        name: $("#name-input-" + articleId).val(),
-        body: $("#comment-area-" + articleId).val()
-      }
-    }).then(function () {
-      $("#comments-modal-" + articleId).modal("hide");
-    })
+    let name = $("#name-input-" + articleId).val();
+    let body = $("#comment-area-" + articleId).val()
+    if (name && body) {
+      $.ajax({
+        url: "/article/" + articleId,
+        type: "POST",
+        data: {
+          name: name,
+          body: body
+        }
+      }).then(function () {
+        $("#comments-modal-" + articleId).modal("hide");
+      })
+    }
+    else {
+      console.log("Needs all fields filled out");
+    }
   })
 
   $(".delete-comment").on("click", function (event) {
