@@ -1,20 +1,17 @@
 $(function () {
   $(".scrape-reviews").on("click", function (event) {
     event.preventDefault();
-    $("#scraping-articles-modal").modal("hide");
     $("#scraping-articles-modal").modal("show");
     $.ajax({
       url: "/scrape",
       type: "GET",
       success: function (result) {
         $("#scraping-articles-modal").modal("hide");
-        $("#articles-scraped-modal").modal("hide");
         $(".modal-body").text(result.message);
         $("#articles-scraped-modal").modal("show");
       },
       error: function () {
         $("#scraping-articles-modal").modal("hide");
-        $("#articles-scraped-modal").modal("hide");
         $(".modal-body").text("Could not scrape at this time");
         $("#articles-scraped-modal").modal("show");
       }
