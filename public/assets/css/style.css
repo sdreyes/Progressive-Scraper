@@ -34,7 +34,7 @@
   background-color: #001a33;
   border-color: #1583a5;
   color: white;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.8), 0 6px 20px 0 rgba(0, 0, 0, 0.8);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
 }
 .btn-dark-blue:hover {
   background-color: #1583a5;
