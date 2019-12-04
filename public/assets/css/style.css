@@ -19,3 +19,28 @@
     height: 150px;
     width: auto;
 }
+
+.btn-dark-blue {
+  background-color: #001a33;
+  border-color: #006989;
+  color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.8), 0 6px 20px 0 rgba(0, 0, 0, 0.8);
+}
+.btn-dark-blue:hover {
+  background-color: #006989;
+  border-color: #001a33;
+  color: white;
+}
+
+.btn-dark-blue:focus {
+  background-color: #006989;
+  border-color: #001a33;
+  color: white;
+
+}
+
+.btn-dark-blue:active {
+  background-color: #001a33;
+  border-color: #006989;
+  color: white;
+}
