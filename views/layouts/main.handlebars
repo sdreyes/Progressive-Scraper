@@ -13,15 +13,20 @@
   <meta property="og:url" content="https://progressive-scraper.herokuapp.com/" />
   <title>Progressive Scraper</title>
   {{!-- Bootstrap CSS CDN --}}
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   {{!-- Bootswatch CDN --}}
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/flatly/bootstrap.min.css">
   {{!-- jQuery CDN --}}
   <script src="https://code.jquery.com/jquery.js"></script>
   {{!-- Popper --}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
   {{!-- Bootstrap JavaScript CDN --}}
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
   {{!-- Google Fonts --}}
   <link href="https://fonts.googleapis.com/css?family=Kalam|Permanent+Marker" rel="stylesheet">
   {{!-- Personal CSS --}}
@@ -31,72 +36,63 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #001a33">
-    <a class="navbar-brand site-title" href="/">Progressive Scraper</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
-      aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarToggler">
-      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/saved">Saved Reviews &nbsp; </a>
-        </li>
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-info my-2 my-sm-0 scrape-reviews" data-toggle="modal">Scrape Reviews</button>
-        &nbsp&nbsp
-        <button class="btn btn-outline-info my-2 my-sm-0 clear-reviews">Clear Reviews</button>
-
-        {{!-- Modal to show that it is still scraping --}}
-
-        <div class="modal fade" id="scraping-articles-modal" tabindex="-1" role="dialog"
-          aria-labelledby="scrapingArticlesModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="scrapingArticlesModalLabel">Scraping...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body text-center">
-                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                  <span class="sr-only">Loading...</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {{!-- Modal to display number of articles scraped --}}
-
-        <div class="modal fade" id="articles-scraped-modal" tabindex="-1" role="dialog"
-          aria-labelledby="articlesScrapedModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="articlesScrapedModalLabel">Scrape Complete</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                {{!-- Modal body is dynamically rendered --}}
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
+  <nav class="navbar navbar-expand navbar-dark" style="background-color: #001a33">
+    <a class="navbar-brand site-title d-none d-sm-block" href="/">Progressive Scraper</a>
+    <ul class="navbar-nav mt-2 mt-lg-0 mx-auto mx-sm-2">
+      <li class="nav-item mx-2 mx-sm-0">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item mx-2 mx-sm-0">
+        <a class="nav-link" href="/saved">Saved Reviews</a>
+      </li>
+    </ul>
   </nav>
+
   <div class="jumbotron text-center">
     <h1 class="text-white site-title" id="jumbo-site-title">Progressive Scraper</h1>
     <h5 class="text-white site-subtitle">The hottest new prog rock album reviews!</h5>
+    <button class="btn btn-lg btn-dark-blue m-2 scrape-reviews" data-toggle="modal">Scrape Reviews</button>
+    <button class="btn btn-lg btn-dark-blue m-2 clear-reviews">Clear Reviews</button>
+
+    {{!-- Modal to show that it is still scraping --}}
+
+    <div class="modal fade" id="scraping-articles-modal" tabindex="-1" role="dialog"
+      aria-labelledby="scrapingArticlesModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="scrapingArticlesModalLabel">Scraping...</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body text-center">
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{!-- Modal to display number of articles scraped --}}
+
+    <div class="modal fade" id="articles-scraped-modal" tabindex="-1" role="dialog"
+      aria-labelledby="articlesScrapedModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="articlesScrapedModalLabel">Scrape Complete</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{!-- Modal body is dynamically rendered --}}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   {{{body}}}
 </body>
