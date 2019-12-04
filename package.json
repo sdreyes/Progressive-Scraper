@@ -1,7 +1,7 @@
 {
   "name": "progressive-scraper",
   "version": "1.0.0",
-  "description": "",
+  "description": "A web scraper that displays ten of the most recent progressive rock album reviews from Prog Archives.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
