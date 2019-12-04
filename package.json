@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/sdreyes/Progressive-Scraper/issues"
   },
-  "homepage": "https://github.com/sdreyes/Progressive-Scraper#readme",
+  "homepage": "https://progressive-scraper.herokuapp.com/",
   "dependencies": {
     "axios": "^0.18.0",
     "cheerio": "^1.0.0-rc.2",
