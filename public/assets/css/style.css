@@ -20,6 +20,10 @@
     width: auto;
 }
 
+.bg-dark-blue {
+  background-color: #001a33;
+}
+
 .btn-dark-blue {
   background-color: #001a33;
   border-color: #006989;
