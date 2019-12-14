@@ -58,3 +58,28 @@
 .hover-sea-blue:hover {
   color: #1583a5 !important;
 }
+
+.save-article {
+  border-color: #001a33;
+  background-color: #1583a5;
+  color: white;
+}
+
+.save-article:hover {
+  border-color: #00315f;
+  background-color: #00315f;
+  color: white;
+}
+
+.save-article:focus {
+  border-color: #00315f;
+  background-color: #00315f;
+  color: white;
+
+}
+
+.save-article:active {
+  border-color: #00315f;
+  background-color: #00315f;
+  color: white;
+}
