@@ -136,7 +136,7 @@ router.post("/article/:id", function (req, res) {
 router.delete("/article/:articleId/comment/:commentId", function (req, res) {
   db.Comment.deleteOne({ _id: req.params.commentId })
     .then(function () {
-      return db.Article.update({ _id: req.params.articleId }, { $pull: { comments: req.params.commentId } });
+      return db.Article.findOneAndUpdate({ _id: req.params.articleId }, { $pull: { comments: req.params.commentId } });
     })
     .then(function (dbArticle) {
       res.json(dbArticle);
