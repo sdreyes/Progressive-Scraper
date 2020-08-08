@@ -30,13 +30,13 @@
                     <label for="comment-input">Comment</label>
                     <textarea class="form-control" id="comment-area-{{id}}" rows="2"></textarea>
                   </div>
-                  <button class="btn btn-info submit-comment" data-id="{{_id}}">Add Comment</button>
+                  <button class="btn btn-save submit-comment" data-id="{{_id}}">Add Comment</button>
                 </form>
                 <hr />
                 <div data-id="{{_id}}" class="comment-div bg-light p-2">
                   {{#comments}}
                   <button type="button" data-id="{{_id}}"
-                    class="btn btn-danger btn-sm float-right delete-comment">X</button><small>
+                    class="btn btn-sm btn-remove float-right delete-comment">X</button><small>
                     {{name}} says:
                   </small>
                   <p>{{body}}</p>

@@ -58,26 +58,26 @@
   color: #1583a5 !important;
 }
 
-.save-article {
+.btn-save {
   border-color: #001a33;
   background-color: #1583a5;
   color: white;
 }
 
-.save-article:hover {
+.btn-save:hover {
   border-color: #00315f;
   background-color: #00315f;
   color: white;
 }
 
-.save-article:focus {
+.btn-save:focus {
   border-color: #00315f;
   background-color: #00315f;
   color: white;
 
 }
 
-.save-article:active {
+.btn-save:active {
   border-color: #00315f;
   background-color: #00315f;
   color: white;
