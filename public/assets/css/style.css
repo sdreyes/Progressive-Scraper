@@ -46,7 +46,6 @@
   background-color: #1583a5;
   border-color: #001a33;
   color: white;
-
 }
 
 .btn-dark-blue:active {
@@ -81,5 +80,55 @@
 .save-article:active {
   border-color: #00315f;
   background-color: #00315f;
+  color: white;
+}
+
+.btn-comments {
+  border-color: #004253;
+  background-color: #15ada6;
+  color: white;
+}
+
+.btn-comments:hover {
+  border-color: #004253;
+  background-color: #004253;
+  color: white;
+}
+
+.btn-comments:focus {
+  border-color: #004253;
+  background-color: #004253;
+  color: white;
+
+}
+
+.btn-comments:active {
+  border-color: #004253;
+  background-color: #004253;
+  color: white;
+}
+
+.btn-remove {
+  border-color: #531100;
+  background-color: #ad3315;
+  color: white;
+}
+
+.btn-remove:hover {
+  border-color: #531100;
+  background-color: #531100;
+  color: white;
+}
+
+.btn-remove:focus {
+  border-color: #531100;
+  background-color: #531100;
+  color: white;
+
+}
+
+.btn-remove:active {
+  border-color: #531100;
+  background-color: #531100;
   color: white;
 }
