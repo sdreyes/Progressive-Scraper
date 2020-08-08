@@ -2,7 +2,7 @@
   {{#each articles}}
   <div class="row mb-2" id="index-content">
     <div class="col bg-light p-2 border">
-      <img class="img-thumbnail rounded float-left mr-3 mb-3 album-cover" src="{{image}}">
+      <img class="img-thumbnail rounded float-left mr-3 mb-3 album-cover" src="{{image}}" />
       <h3>{{album}}</h3>
       <h5>{{artist}}</h5>
       <small>Review by <strong>{{author}}</strong></small>
@@ -24,7 +24,7 @@
                 <form>
                   <div class="form-group">
                     <label for="name-input">Name</label>
-                    <input type="text" class="form-control" id="name-input-{{id}}" placeholder="Jane Doe">
+                    <input type="text" class="form-control" id="name-input-{{id}}" placeholder="Jane Doe" />
                   </div>
                   <div class="form-group">
                     <label for="comment-input">Comment</label>
@@ -32,16 +32,22 @@
                   </div>
                   <button class="btn btn-save submit-comment" data-id="{{_id}}">Add Comment</button>
                 </form>
+                {{#if comments}}
                 <hr />
-                <div data-id="{{_id}}" class="comment-div bg-light p-2">
+                <div data-id="{{_id}}" class="comment-div">
                   {{#comments}}
-                  <button type="button" data-id="{{_id}}"
-                    class="btn btn-sm btn-remove float-right delete-comment">X</button><small>
-                    {{name}} says:
-                  </small>
-                  <p>{{body}}</p>
+                  <div class="m-1 p-2 bg-light rounded">
+                    <button type="button" data-id="{{_id}}" class="btn btn-sm btn-remove float-right delete-comment">
+                      X
+                    </button>
+                    <small>
+                      {{name}} says:
+                    </small>
+                    <p>{{body}}</p>
+                  </div>
                   {{/comments}}
                 </div>
+                {{/if}}
               </div>
             </div>
           </div>
