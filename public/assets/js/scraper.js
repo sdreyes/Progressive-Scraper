@@ -91,7 +91,7 @@ $(function () {
   $(".delete-comment").on("click", function (event) {
     event.preventDefault();
     let commentId = $(this).attr("data-id");
-    let articleId = $(this).parent().attr("data-id");
+    let articleId = $(this).parent().parent().attr("data-id");
     $.ajax({
       url: "/article/" + articleId + "/comment/" + commentId,
       type: "DELETE"
