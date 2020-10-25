@@ -3,6 +3,12 @@ const router = express.Router();
 const axios = require("axios");
 const cheerio = require("cheerio");
 const db = require("../models");
+require("dotenv").config();
+const Spotify = require("node-spotify-api");
+const spotify = new Spotify({
+  id: process.env.SPOTIFY_ID,
+  secret: process.env.SPOTIFY_SECRET
+});
 
 router.get("/", function (req, res) {
   db.Article.find({ "saved": false }).sort({ _id: -1 }).limit(10)
@@ -57,11 +63,12 @@ router.get("/scrape", function (req, res) {
           .children(".review-text-zone")
           .children("div").first()
           .text();
-        result.image = $(this)
-          .children(".review-cover-zone")
-          .children("a").first()
-          .children("img")
-          .attr("src");
+        // Prog Archives no longer allows hotlinking for images:
+        // result.image = $(this)
+        //   .children(".review-cover-zone")
+        //   .children("a").first()
+        //   .children("img")
+        //   .attr("src");
         result.author = $(this)
           .children(".review-text-zone")
           .children("p").first()
@@ -77,7 +84,26 @@ router.get("/scrape", function (req, res) {
         // Shorten the summary to less characters instead of capturing the entire paragraph
         result.review = result.review.substring(0, previewLength);
 
-        db.Article.create(result)
+        // Using Spotify to capture the album art since Prog Archives does not allow hotlinking
+        spotify.search({
+          type: 'album',
+          query: result.artist + " " + result.album,
+          limit: 1
+        }, function (err, data) {
+          if (err) return console.log("Error occured: " + err);
+          // If there is a match
+          if (data.albums.items.length > 0) {
+            // And if if there are images available
+            if (data.albums.items[0].images.length > 0) {
+              result.image = data.albums.items[0].images[0].url;
+            } else {
+              result.image = "https://via.placeholder.com/640x640?text=ART+UNAVAILABLE";
+            }
+          } else {
+            result.image = "https://via.placeholder.com/640x640?text=ART+UNAVAILABLE";
+          }
+          console.log(result);
+          db.Article.create(result)
           .then(function (dbArticle) {
             numArticles++;
             renderArticles(numArticles);
@@ -86,6 +112,7 @@ router.get("/scrape", function (req, res) {
             renderArticles(numArticles);
             console.log(err);
           })
+        })
       });
       function renderArticles(numArticles) {
         numAttempts++
