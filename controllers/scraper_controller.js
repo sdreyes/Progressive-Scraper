@@ -13,8 +13,10 @@ const spotify = new Spotify({
 router.get("/", function (req, res) {
   db.Article.find({ "saved": false }).sort({ _id: -1 }).limit(10)
     .then(function (dbArticle) {
+      let stringifiedArticles = JSON.stringify(dbArticle);
+      let parsedArticles = JSON.parse(stringifiedArticles);
       const hbsObject = {
-        articles: dbArticle
+        articles: parsedArticles
       };
       console.log(hbsObject);
       res.render("index", hbsObject);
