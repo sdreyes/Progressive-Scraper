@@ -1,3 +1,8 @@
+.input-error {
+  border-color: #a72828;
+  box-shadow: 0 0 0 0.2rem rgba(167, 40, 40, 0.25);
+}
+
 .btn-dark-blue:hover {
   background-color: #006989;
   border-color: #001a33;
