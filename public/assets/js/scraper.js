@@ -69,8 +69,10 @@ $(function () {
   $(".submit-comment").on("click", function (event) {
     event.preventDefault();
     let articleId = $(this).attr("data-id");
-    let name = $("#name-input-" + articleId).val();
-    let body = $("#comment-area-" + articleId).val();
+    let nameInputBox = $("#name-input-" + articleId);
+    let commentTextArea = $("#comment-area-" + articleId);
+    let name = nameInputBox.val();
+    let body = commentTextArea.val();
     if (name && body) {
       $.ajax({
         url: "/article/" + articleId,
@@ -84,7 +86,18 @@ $(function () {
       })
     }
     else {
-      console.log("Needs all fields filled out");
+      if (!nameInputBox.val()) {
+        nameInputBox.addClass("input-error");
+      };
+      if (!commentTextArea.val()) {
+        commentTextArea.addClass("input-error");
+      };
+    }
+  })
+
+  $(".form-control").on("input", function() {
+    if ($(this).val()) {
+      $(this).removeClass("input-error");
     }
   })
 
