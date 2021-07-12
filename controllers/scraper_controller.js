@@ -30,8 +30,10 @@ router.get("/saved", function (req, res) {
   db.Article.find({ "saved": true }).sort({ _id: -1 })
     .populate("comments")
     .then(function (dbArticle) {
+      let stringifiedArticles = JSON.stringify(dbArticle);
+      let parsedArticles = JSON.parse(stringifiedArticles);
       const hbsObject = {
-        articles: dbArticle
+        articles: parsedArticles
       };
       res.render("saved", hbsObject);
     })
