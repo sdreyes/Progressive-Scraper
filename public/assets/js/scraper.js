@@ -70,7 +70,7 @@ $(function () {
     event.preventDefault();
     let articleId = $(this).attr("data-id");
     let name = $("#name-input-" + articleId).val();
-    let body = $("#comment-area-" + articleId).val()
+    let body = $("#comment-area-" + articleId).val();
     if (name && body) {
       $.ajax({
         url: "/article/" + articleId,
